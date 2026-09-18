@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="100%" height="100%">
+  <defs>
+    <linearGradient id="matlabGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ea580c" />
+      <stop offset="40%" stop-color="#dc2626" />
+      <stop offset="100%" stop-color="#7c2d12" />
+    </linearGradient>
+  </defs>
+  <!-- Curva del L-shaped membrane de MATLAB -->
+  <path fill="url(#matlabGrad)" d="M14 88 C32 108 55 118 78 110 C98 103 118 82 112 55 C108 36 94 20 72 24 C55 27 48 42 38 58 C26 77 18 80 14 88 Z"/>
+  <path fill="#f97316" opacity="0.8" d="M30 65 C40 45 60 30 75 35 C88 39 98 52 95 68 C90 84 75 95 60 92 C45 88 35 78 30 65 Z"/>
+  <path fill="#fed7aa" opacity="0.9" d="M48 55 C55 46 65 42 72 45 C78 48 80 56 75 64 C70 72 60 76 54 72 C48 68 45 60 48 55 Z"/>
+  <path d="M18 86 Q50 60 72 45 Q90 55 106 60 Q85 85 70 98 Q40 92 18 86" fill="none" stroke="#ffffff" stroke-width="1.5" opacity="0.6"/>
+</svg>

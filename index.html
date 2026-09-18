@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Catálogo y presentación interactiva de señales fundamentales en ingeniería de telecomunicaciones utilizando MATLAB y Python.">
+  <title>Catálogo de Señales Fundamentales - Telecomunicaciones</title>
+
+  <!-- Google Fonts: Outfit & Inter & Fira Code -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- KaTeX CSS & JS (Renderizado matemático LaTeX de alta velocidad) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+  <!-- Plotly.js (Gráficas científicas interactivas con estilo MATLAB) -->
+  <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
+
+  <!-- Prism.js (Resaltado de sintaxis para MATLAB y Python) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-matlab.min.js"></script>
+
+  <!-- Estilos del Proyecto -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <div class="app-container">
+
+    <!-- =======================================================
+         ENCABEZADO INSTITUCIONAL CON ESPACIO PARA 2 LOGOS
+         ======================================================= -->
+    <header class="header-hero">
+      
+      <!-- LOGO IZQUIERDO: UNIVERSIDAD -->
+      <div class="logo-slot" id="uni-logo-slot" title="Haz clic para cargar el logo de la Universidad Nacional de San Agustín">
+        <div class="logo-wrapper">
+          <img src="img/Escudo_UNSA.png.webp" alt="Logo UNSA" class="logo-img" id="uni-logo-img">
+        </div>
+        <span class="logo-label">UNIVERSIDAD NACIONAL DE SAN AGUSTIN</span>
+        <button class="logo-change-btn" type="button">______</button>
+        <input type="file" id="uni-logo-input" class="file-input-hidden" accept="image/*">
+      </div>
+
+      <!-- TÍTULO Y PRESENTACIÓN DEL PROYECTO -->
+      <div class="hero-content">
+        <div class="badge-tag">
+          <span class="dot"></span>
+          Proyecto de Señales para el curso de Señales y Sistemas
+        </div>
+        <h1 class="hero-title">Catálogo y Análisis de Señales Fundamentales</h1>
+        <p class="hero-subtitle">
+          Plataforma web de presentación interactiva para el modelado matemático, simulación computacional 
+          y visualización gráfica científica de señales en <strong>MATLAB</strong> y <strong>Python</strong>.
+        </p>
+      </div>
+
+      <!-- LOGO DERECHO: CARRERA / FACULTAD -->
+      <div class="logo-slot" id="fac-logo-slot" title="Haz clic para cargar el logo de Ing. en Telecomunicaciones">
+        <div class="logo-wrapper">
+          <img src="img/LOGO_EPIT.png" alt="Logo Telecomunicaciones" class="logo-img" id="fac-logo-img">
+        </div>
+        <span class="logo-label">ING. EN TELECOMUNICACIONES</span>
+        <button class="logo-change-btn" type="button">______</button>
+        <input type="file" id="fac-logo-input" class="file-input-hidden" accept="image/*">
+      </div>
+
+    </header>
+
+    <!-- =======================================================
+         BARRA DE NAVEGACIÓN SUPERIOR
+         ======================================================= -->
+    <nav class="top-navbar">
+      <div class="nav-brand" onclick="App.goToSection('home')">
+        <span>📡</span>
+        <span>EPIT - UNSA</span>
+      </div>
+      <ul class="nav-links">
+        <li><button class="nav-btn active" data-nav="home" onclick="App.goToSection('home')">🏠 Portada</button></li>
+        <li><button class="nav-btn" data-nav="sec-intro" onclick="App.goToSection('sec-intro')">📝 Introducción</button></li>
+        <li><button class="nav-btn" data-nav="sec-expositores" onclick="App.goToSection('sec-expositores')">👥 Expositores</button></li>
+        <li><button class="nav-btn" data-nav="sec-teoria" onclick="App.goToSection('sec-teoria')">📖 Teoría de Señales</button></li>
+        <li><button class="nav-btn" data-nav="sec-herramientas" onclick="App.goToSection('sec-herramientas')">⚙️ MATLAB vs Python</button></li>
+        <li><button class="nav-btn nav-btn-highlight" data-nav="sec-modulos" onclick="App.goToSection('sec-modulos')">🗂️ Catálogo de Señales</button></li>
+        <li><button class="nav-btn btn-fullscreen-toggle" title="Pantalla Completa (F)">🖥️ Fullscreen</button></li>
+      </ul>
+    </nav>
+
+    <!-- =======================================================
+         VISTA 1: HOME (PORTADA, TEORÍA Y MÓDULOS)
+         ======================================================= -->
+    <main id="home-view" class="view-container active">
+
+      <!-- SECCIÓN 1: INTRODUCCIÓN Y TEMARIO -->
+      <section class="section-block" id="sec-intro">
+        <div class="grid-2col">
+          
+          <div class="card-glass">
+            <h3><span>📌</span> Introducción al Proyecto</h3>
+            <p style="margin-bottom: 14px;">
+              El estudio riguroso de las <strong>señales y sistemas</strong> constituye la piedra angular sobre la que 
+              se sustentan todas las ramas de la ingeniería electrónica y las telecomunicaciones modernas. Desde 
+              la transmisión de voz y datos por fibra óptica o radiofrecuencia hasta el procesamiento de señales 
+              biomédicas y radares, el dominio del tiempo y de la frecuencia permite describir los fenómenos físicos 
+              con exactitud analítica.
+            </p>
+            <p>
+              Este proyecto presenta un <strong>catálogo interactivo de 29 señales fundamentales</strong>, 
+              estructuradas pedagógicamente para exposiciones académicas. Cada señal incluye su 
+              <strong>definición técnica</strong>, su <strong>modelo matemático en LaTeX</strong>, su 
+              <strong>código fuente equivalente en MATLAB y Python</strong>, y su correspondiente 
+              <strong>gráfica científica interactiva</strong> simulada con alta resolución.
+            </p>
+          </div>
+
+          <div class="card-glass">
+            <h3><span>📑</span> Contenido y Estructura de la Presentación</h3>
+            <ul class="temario-list">
+              <li class="temario-item">
+                <span class="temario-num">1</span>
+                <div>
+                  <strong>Fundamentos de Señales en Telecomunicaciones:</strong>
+                  <div style="font-size: 0.85rem; color: var(--text-muted);">Definición, clasificación analógica/digital, continua/discreta y balances de energía/potencia.</div>
+                </div>
+              </li>
+              <li class="temario-item">
+                <span class="temario-num">2</span>
+                <div>
+                  <strong>Ecosistemas de Simulación:</strong>
+                  <div style="font-size: 0.85rem; color: var(--text-muted);">MATLAB (Toolbox especializados) vs Python (NumPy, Matplotlib, SciPy.signal).</div>
+                </div>
+              </li>
+              <li class="temario-item">
+                <span class="temario-num">3</span>
+                <div>
+                  <strong>Catálogo Práctico por Módulos Temáticos:</strong>
+                  <div style="font-size: 0.85rem; color: var(--text-muted);">Señales básicas, exponenciales, modulaciones, pulsos especiales, ondas y aliasing.</div>
+                </div>
+              </li>
+              <li class="temario-item">
+                <span class="temario-num">4</span>
+                <div>
+                  <strong>Modo Exposición Dinámica:</strong>
+                  <div style="font-size: 0.85rem; color: var(--text-muted);">Navegación fluida por diapositivas, atajos con teclado y copiado de códigos en vivo.</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </section>
+
+      
+
+      <!-- SECCIÓN 3: TEORÍA PROFUNDA DE SEÑALES -->
+      <section class="section-block" id="sec-teoria">
+        <div class="section-header">
+          <h2 class="section-title">¿Qué son las Señales y por qué son Vitales?</h2>
+          <p class="section-subtitle">
+          </p>
+        </div>
+
+        <div class="card-glass" style="margin-bottom: 24px;">
+          <p style="font-size: 1.05rem; line-height: 1.7; color: #e2e8f0;">
+            Una <strong>señal</strong> es la manifestación física observable de una magnitud que varía en función 
+            de una o más variables independientes (habitualmente el tiempo $t$ o el espacio $x, y, z$) y que tiene 
+            la capacidad intrínseca de <strong>transportar información</strong>. En los canales de telecomunicaciones, 
+            las señales toman la forma de voltajes inducidos, corrientes eléctricas guiadas en conductores, pulsos de 
+            luz confinada en fibras ópticas u ondas electromagnéticas radiadas al espacio libre.
+          </p>
+        </div>
+
+        <div class="theory-grid">
+          
+          <div class="theory-card">
+            <div class="theory-card-icon">⚡</div>
+            <h4>Continuas vs. Discretas</h4>
+            <p>
+              Una señal de <strong>tiempo continuo</strong> está definida para cualquier instante real $t \in \mathbb{R}$. 
+              Una de <strong>tiempo discreto</strong> solo existe en valores enteros de muestra $n \in \mathbb{Z}$, 
+              formando la entrada nativa de procesadores digitales (DSP).
+            </p>
+          </div>
+
+          <div class="theory-card">
+            <div class="theory-card-icon">🎛️</div>
+            <h4>Analógicas vs. Digitales</h4>
+            <p>
+              La señal analógica toma un rango continuo infinito de amplitudes posibles. La digital restringe su 
+              amplitud a un conjunto discreto de niveles cuantizados (por ejemplo, 0 y 1 lógico), lo que permite 
+              la regeneración limpia inmune al ruido térmico acumulativo.
+            </p>
+          </div>
+
+          <div class="theory-card">
+            <div class="theory-card-icon">🔄</div>
+            <h4>Periódicas vs. Aperiódicas</h4>
+            <p>
+              Una señal periódica cumple la condición $x(t + T) = x(t)$, produciendo un espectro armónico 
+              discreto en Serie de Fourier. Una señal no periódica no se repite y su análisis requiere la 
+              Transformada Integral de Fourier continua.
+            </p>
+          </div>
+
+          <div class="theory-card">
+            <div class="theory-card-icon">🔋</div>
+            <h4>Energía vs. Potencia</h4>
+            <p>
+              Las <strong>señales de energía</strong> poseen energía total finita ($0 < E < \infty$) y potencia media cero, 
+              como los pulsos transitorios. Las <strong>señales de potencia</strong> poseen potencia media finita no nula, 
+              como las ondas senoidales portadoras infinitas.
+            </p>
+          </div>
+
+          <div class="theory-card">
+            <div class="theory-card-icon">🎯</div>
+            <h4>Deterministas vs. Aleatorias</h4>
+            <p>
+              Las señales deterministas pueden expresarse mediante una ecuación matemática exacta y predecible. 
+              Las aleatorias (ruido térmico, fluctuaciones de canal multitrayecto) solo se describen estadísticamente 
+              a través de su densidad espectral de potencia y funciones de autocorrelación.
+            </p>
+          </div>
+
+          <div class="theory-card">
+            <div class="theory-card-icon">🌐</div>
+            <h4>Importancia en Telecomunicaciones</h4>
+            <p>
+              Permite diseñar moduladores analógicos y digitales (AM, FM, QAM, OFDM), dimensionar el 
+              <strong>ancho de banda</strong> de canales y antenas, mitigar la interferencia intersimbólica (ISI) 
+              y evitar la distorsión por <strong>Aliasing</strong> según el Teorema de Nyquist.
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SECCIÓN 4: HERRAMIENTAS DE SIMULACIÓN (PYTHON VS MATLAB) -->
+      <section class="section-block" id="sec-herramientas">
+        <div class="section-header">
+          <h2 class="section-title">Herramientas de Simulación Científica</h2>
+          <p class="section-subtitle">
+            Comparativa entre los dos estándares globales para el análisis, procesamiento y graficación de señales.
+          </p>
+        </div>
+
+        <div class="tools-showdown">
+          
+          <!-- TARJETA MATLAB -->
+          <div class="tool-box matlab">
+            <div class="tool-header">
+              <div class="tool-logo-wrap">
+                <img src="assets/matlab-logo.svg" alt="MATLAB Logo" class="tool-logo-img">
+              </div>
+              <div class="tool-info">
+                <h3>MATLAB</h3>
+                <span class="tool-tag">Estándar Industrial y de Investigación (MathWorks)</span>
+              </div>
+            </div>
+            <p>
+              Entorno de cálculo numérico y programación matricial de altísimo rendimiento, diseñado específicamente 
+              para ingeniería, telecomunicaciones y sistemas de control.
+            </p>
+            <ul class="tool-features-list">
+              <li>
+                <span>🔹</span>
+                <div><strong>Toolbox Especializados:</strong> Signal Processing Toolbox, Communications Toolbox, DSP System Toolbox.</div>
+              </li>
+              <li>
+                <span>🔹</span>
+                <div><strong>Sintaxis Clave:</strong> <code>t = 0:0.01:10;</code>, <code>plot(t, x);</code>, <code>stem(n, x);</code>, <code>sawtooth();</code>, <code>sinc();</code>, <code>fft();</code></div>
+              </li>
+              <li>
+                <span>🔹</span>
+                <div><strong>Ventajas Principales:</strong> Gráficos científicos listos para publicación, interfaz Simulink integrada y librerías ultra optimizadas en álgebra lineal.</div>
+              </li>
+            </ul>
+            <div class="code-syntax-snippet">
+              <span style="color: #64748b;">% Ejemplo canónico en MATLAB</span><br>
+              t = linspace(0, 1, 1000);<br>
+              x = sin(2*pi*50*t);<br>
+              plot(t, x, 'b', 'LineWidth', 2); grid on;
+            </div>
+          </div>
+
+          <!-- TARJETA PYTHON -->
+          <div class="tool-box python">
+            <div class="tool-header">
+              <div class="tool-logo-wrap">
+                <img src="assets/python-logo.svg" alt="Python Logo" class="tool-logo-img">
+              </div>
+              <div class="tool-info">
+                <h3>Python</h3>
+                <span class="tool-tag">Ecosistema de Código Abierto e Inteligencia Artificial</span>
+              </div>
+            </div>
+            <p>
+              Lenguaje multipropósito de código abierto que se ha consolidado en telecomunicaciones gracias a su 
+              enorme ecosistema científico y su conexión natural con DSP, Machine Learning y SDR (Software Defined Radio).
+            </p>
+            <ul class="tool-features-list">
+              <li>
+                <span>🔸</span>
+                <div><strong>Librerías Clave:</strong> <code>NumPy</code> (vectores y matrices), <code>Matplotlib</code> (graficación 2D/3D), <code>SciPy.signal</code> (filtros y convolución).</div>
+              </li>
+              <li>
+                <span>🔸</span>
+                <div><strong>Sintaxis Clave:</strong> <code>np.linspace()</code>, <code>np.sin()</code>, <code>plt.plot()</code>, <code>plt.stem()</code>, <code>signal.sawtooth()</code></div>
+              </li>
+              <li>
+                <span>🔸</span>
+                <div><strong>Ventajas Principales:</strong> Gratuito, multiplataforma, integración directa con radios GNU Radio y despliegue rápido en servidores y aplicaciones web.</div>
+              </li>
+            </ul>
+            <div class="code-syntax-snippet">
+              <span style="color: #64748b;"># Ejemplo canónico en Python</span><br>
+              t = np.linspace(0, 1, 1000)<br>
+              x = np.sin(2 * np.pi * 50 * t)<br>
+              plt.plot(t, x, 'b', linewidth=2); plt.grid(True)
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SECCIÓN 5: MÓDULOS DE SEÑALES (ACCESOS HIPERVÍNCULOS A CADA GRUPO) -->
+      <section class="section-block" id="sec-modulos">
+        <div class="section-header">
+          <h2 class="section-title">Catálogo de Señales por Expositor</h2>
+          <p class="section-subtitle">
+          </p>
+        </div>
+        <div class="modules-grid" id="modules-container">
+          <!-- Renderizado dinámico desde signalsData.js -->
+        </div>
+      </section>
+
+      <!-- SECCIÓN 2: EXPOSITORES (ORDEN ALFABÉTICO POR APELLIDO) -->
+      <section class="section-block" id="sec-expositores">
+        <div class="section-header">
+          <h2 class="section-title">Equipo de Expositores</h2>
+          <p class="section-subtitle">
+            Estudiantes investigadores ordenados alfabéticamente por apellido con sus respectivos módulos asignados:
+          </p>
+        </div>
+        <div class="expositores-grid" id="expositores-container">
+          <!-- Renderizado dinámico desde signalsData.js -->
+        </div>
+      </section>
+
+    </main>
+
+    <!-- =======================================================
+         VISTA 2: LISTA DE SEÑALES DEL EXPOSITOR SELECCIONADO
+         ======================================================= -->
+    <section id="expositor-view" class="view-container">
+      
+      <div class="view-header-bar">
+        <div>
+          <button class="btn-back" onclick="App.navigateTo('#home')">
+            <span>←</span> <span>Volver a la Portada Principal</span>
+          </button>
+        </div>
+        <div style="text-align: right;">
+          <h2 id="expositor-view-title" style="font-size: 1.5rem; color: #ffffff;">Módulo de Señales</h2>
+          <span id="expositor-view-subtitle" style="font-size: 0.9rem; color: var(--accent-cyan);"></span>
+        </div>
+      </div>
+
+      <div class="signals-list-grid" id="signals-list-container">
+        <!-- Renderizado dinámico de tarjetas de señales -->
+      </div>
+
+    </section>
+
+    <!-- =======================================================
+         VISTA 3: EXPOSICIÓN DETALLADA DE LA SEÑAL (MODO PRESENTACIÓN)
+         ======================================================= -->
+    <section id="signal-detail-view" class="view-container">
+      
+      <!-- Barra de herramientas de presentación -->
+      <div class="presentation-bar">
+        
+        <div>
+          <button class="btn-back" onclick="App.navigateTo('#expositor/' + App.currentCategory)">
+            <span>←</span> <span>Volver a la Lista de Señales</span>
+          </button>
+        </div>
+
+        <!-- Breadcrumbs -->
+        <div style="font-size: 0.9rem; color: var(--text-muted); display: flex; align-items: center; gap: 8px;">
+          <span style="cursor: pointer;" onclick="App.navigateTo('#home')">Inicio</span>
+          <span>/</span>
+          <span style="cursor: pointer; color: var(--accent-blue);" id="breadcrumb-category">Módulo</span>
+          <span>/</span>
+          <strong style="color: #ffffff;" id="breadcrumb-signal">Señal</strong>
+        </div>
+
+        <!-- Controles de Diapositivas y Pantalla Completa -->
+        <div class="presentation-nav-controls">
+          <button class="btn-nav-slide" id="btn-prev-signal" title="Señal Anterior (Flecha Izquierda)">
+            <span>◀</span> <span>Anterior</span>
+          </button>
+          <button class="btn-nav-slide" id="btn-next-signal" title="Siguiente Señal (Flecha Derecha)">
+            <span>Siguiente</span> <span>▶</span>
+          </button>
+          <button class="btn-nav-slide btn-fullscreen-toggle" title="Alternar Pantalla Completa (F)">
+            <span>🖥️</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Indicadores de teclado para el presentador -->
+      <div class="presentation-kbd-hints" style="margin-bottom: 20px;">
+        <span>💡 Modo Exposición Activo:</span>
+        <span>Usa <span class="kbd-badge">←</span> y <span class="kbd-badge">→</span> para cambiar de señal</span>
+        <span><span class="kbd-badge">Esc</span> volver a la lista</span>
+        <span><span class="kbd-badge">F</span> pantalla completa</span>
+      </div>
+
+      <!-- =======================================================
+           SECCIÓN SUPERIOR: ANCHO COMPLETO (TEORÍA Y MODELO MATEMÁTICO)
+           ======================================================= -->
+      <div class="signal-top-fullwidth">
+        
+        <!-- Tarjeta de Título, Definición e Importancia -->
+        <div class="info-card" style="margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 12px; flex-wrap: wrap; gap: 10px;">
+            <h2 id="signal-detail-title" style="font-size: 1.85rem; color: #ffffff;">Nombre de Señal</h2>
+            <span id="signal-author-tag" class="badge-tag" style="margin-bottom: 0;">Expositor</span>
+          </div>
+
+          <div class="signal-theory-columns">
+            <div class="theory-col">
+              <h4><span>📘</span> Definición Técnica</h4>
+              <p id="signal-desc-content" style="line-height: 1.65;"></p>
+            </div>
+            <div class="theory-col">
+              <h4><span>📡</span> Importancia en Telecomunicaciones</h4>
+              <p id="signal-importance-content" style="line-height: 1.65;"></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tarjeta de Modelo Matemático a Ancho Completo -->
+        <div class="info-card" style="margin-bottom: 24px;">
+          <h4><span>📐</span> Modelo Matemático y Análisis Analítico</h4>
+          <div class="math-equation-box" id="signal-math-formula-box">
+            <!-- Renderizado dinámico KaTeX -->
+          </div>
+          <div style="font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6;" id="signal-math-explanation">
+            <!-- Desglose de variables y parámetros -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- =======================================================
+           SECCIÓN INFERIOR: CÓDIGOS A UN COSTADO Y GRÁFICA AL OTRO
+           ======================================================= -->
+      <div class="signal-bottom-grid">
+        
+        <!-- COSTADO IZQUIERDO: VISOR DE CÓDIGOS (MATLAB & PYTHON) -->
+        <div class="code-viewer-block">
+          <div class="code-tabs-header">
+            <div class="code-tabs">
+              <button class="code-tab-btn active" data-tab="matlab">
+                <span>🟧</span> Código MATLAB (Script)
+              </button>
+              <button class="code-tab-btn" data-tab="python">
+                <span>🟦</span> Código Python (NumPy/SciPy)
+              </button>
+            </div>
+            <button class="btn-copy-code" id="btn-copy-active-code">
+              <span>📋</span> <span>Copiar</span>
+            </button>
+          </div>
+
+          <!-- Contenido MATLAB -->
+          <div class="code-tab-content active" data-content="matlab">
+            <pre><code class="language-matlab" id="code-matlab"></code></pre>
+          </div>
+
+          <!-- Contenido Python -->
+          <div class="code-tab-content" data-content="python">
+            <pre><code class="language-python" id="code-python"></code></pre>
+          </div>
+        </div>
+
+        <!-- COSTADO DERECHO: VISUALIZACIÓN CIENTÍFICA ESTILO MATLAB -->
+        <div class="plot-card">
+          <div class="plot-header">
+            <h3 class="plot-title">
+              <span>📊</span>
+              <span>Visualización Fiel MATLAB</span>
+            </h3>
+            <span class="plot-badge">Simulación Plotly</span>
+          </div>
+          
+          <!-- Contenedor Plotly -->
+          <div id="signal-plot-container" class="plot-canvas-container"></div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- FOOTER INSTITUCIONAL -->
+    <footer class="footer-academic">
+      <p><strong>Catálogo y Análisis de Señales Fundamentales en Telecomunicaciones</strong></p>
+      <p>Simulaciones científicas en MATLAB y Python · Producido con tecnología web moderna</p>
+      <p style="color: var(--accent-cyan); margin-top: 8px;">
+        Expositores: Henry Gutierrez · Franco Gutierrez · Benjamín Quispe · Alex Quispe · Zaul Uturunco · Jeremy Villalta
+      </p>
+    </footer>
+
+  </div>
+
+  <!-- Scripts del Proyecto -->
+  <script src="js/signalsData.js"></script>
+  <script src="js/plotEngine.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
